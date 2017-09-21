@@ -19,6 +19,7 @@ import java.util.List;
 public class StepView extends LinearLayout {
     private LinearLayout llayout_content;
     private List<StepBean> mStepBeanList;
+    private int stepPosition;
 
     public List<StepBean> getmStepBeanList() {
         return mStepBeanList;
@@ -84,6 +85,28 @@ public class StepView extends LinearLayout {
     public StepView setmCompletedLineColor(int mCompletedLineColor) {
         this.mCompletedLineColor = mCompletedLineColor;
         return this;
+    }
+
+    public int getStepPosition() {
+        return stepPosition;
+    }
+
+    public void setStepPosition(int stepPosition) {
+        if (stepPosition >= 0 && stepPosition < mStepBeanList.size()) {
+            this.stepPosition = stepPosition;
+            for (int i = 0; i < mStepBeanList.size(); i++) {
+                StepBean stepBean = mStepBeanList.get(i);
+                if (i < stepPosition) {//已完成
+                    stepBean.setStepType(StepBean.TYPE_COMPELTED);
+                } else if (i == stepPosition) {//正在
+                    stepBean.setStepType(StepBean.TYPE_CURRENT);
+                } else {//正常状态
+                    stepBean.setStepType(StepBean.TYPE_NORMAL);
+                }
+            }
+            notifyDataSetChanged();
+        }
+
     }
 
     public StepView setmUnCompletedLineColor(int mUnCompletedLineColor) {

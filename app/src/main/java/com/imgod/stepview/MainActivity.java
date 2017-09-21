@@ -2,12 +2,14 @@ package com.imgod.stepview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.imgod.stepview.view.StepView;
 import com.imgod.stepview.view.bean.StepBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author kk
  * @date 2017/9/21 15:17
@@ -25,11 +27,13 @@ public class MainActivity extends Activity {
         initData();
     }
 
+    List<StepBean> list = new ArrayList<>();
+
     private void initData() {
-        List<StepBean> list = new ArrayList<>();
-        StepBean stepBean1 = new StepBean(StepBean.TYPE_COMPELTED, "1", "微信授权", true, false);
-        StepBean stepBean2 = new StepBean(StepBean.TYPE_COMPELTED, "2", "手机验证", false, false);
-        StepBean stepBean3 = new StepBean(StepBean.TYPE_CURRENT, "3", "设置密码", false, true);
+
+        StepBean stepBean1 = new StepBean(StepBean.TYPE_CURRENT, "1", "微信授权", true, false);
+        StepBean stepBean2 = new StepBean(StepBean.TYPE_NORMAL, "2", "手机验证", false, false);
+        StepBean stepBean3 = new StepBean(StepBean.TYPE_NORMAL, "3", "设置密码", false, true);
         list.add(stepBean1);
         list.add(stepBean2);
 //        list.add(stepBean2);
@@ -55,4 +59,14 @@ public class MainActivity extends Activity {
         stepview.setmStepBeanList(list);
     }
 
+
+    private int location = 0;
+
+    public void onClick(View view) {
+        location += 1;
+        if (location >= list.size()) {
+            location = 0;
+        }
+        stepview.setStepPosition(location);
+    }
 }
